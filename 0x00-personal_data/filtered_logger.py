@@ -81,12 +81,17 @@ def main() -> None:
     each row under a filtered format
     """
     db = get_db()
-    if db:
-        with db.cursor() as cursor:
+    try:
+        if db:
+            cursor = db.cursor()
             cursor.execute("SELECT COUNT(*) FROM users;")
-            result = cursor.fetchone()[0]
-            print(result)
-        db.close()
+            count = cursor.fetchone()[0]
+            print(count)
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        if db:
+            db.close()
 
 
 if __name__ == "__main__":
