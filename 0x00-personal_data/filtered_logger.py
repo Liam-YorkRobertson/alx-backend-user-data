@@ -75,16 +75,26 @@ def get_db() -> mysql.connector.connection.MYSQLConnection:
     return connection
 
 
-def main():
-    """
-    main function
+def main() -> None:
+    """ Obtain database connection using get_db
+    retrieve all role in the users table and display
+    each row under a filtered format
     """
     db = get_db()
-    if db:
-        with db.cursor() as cursor:
-            cursor.execute("SELECT COUNT(*) FROM users;")
-            print(cursor.fetchone()[0])
-        db.close()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+
+    headers = [field[0] for field in cursor.description]
+    logger = get_logger()
+
+    for row in cursor:
+        info_answer = ''
+        for f, p in zip(row, headers):
+            info_answer += f'{p}={(f)}; '
+        logger.info(info_answer)
+
+    cursor.close()
+    db.close()
 
 
 if __name__ == "__main__":
