@@ -5,6 +5,8 @@ replacing occurrences of field values
 import re
 from typing import List, Tuple
 import logging
+import os
+import mysql.connector
 
 
 class RedactingFormatter(logging.Formatter):
@@ -58,3 +60,32 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     return logger
+
+
+def get_db() -> mysql.connector.connection.MYSQLConnection:
+    """
+    connects to database and retrieves data
+    """
+    connection = mysql.connector.connect(
+        user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
+        password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
+        host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
+        database=os.getenv("PERSONAL_DATA_DB_NAME", ""),
+    )
+    return connection
+
+
+def main():
+    """
+    main function
+    """
+    db = get_db()
+    if db:
+        with db.cursor() as cursor:
+            cursor.execute("SELECT COUNT(*) FROM users;")
+            print(cursor.fetchone()[0])
+        db.close()
+
+
+if __name__ == "__main__":
+    main()
