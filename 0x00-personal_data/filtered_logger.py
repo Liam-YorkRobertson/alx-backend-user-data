@@ -81,13 +81,18 @@ def main() -> None:
     each row under a filtered format
     """
     db = get_db()
-
-    if db:
-        with db.cursor() as cursor:
-            cursor.execute("SELECT COUNT(*) FROM users;")
-            print(cursor.fetchone()[0])
-
-        db.close()
+    try:
+        if db:
+            cursor = db.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM users;")
+            for row in cursor.fetchall():
+                user_data = "; ".join(f"{key}={value}" for key, value in row.items())
+                logging.getLogger("user_data").info(user_data)
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        if db:
+            db.close()
 
 
 if __name__ == "__main__":
