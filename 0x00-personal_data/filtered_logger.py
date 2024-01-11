@@ -3,7 +3,7 @@
 replacing occurrences of field values
 """
 import re
-from typing import List
+from typing import List, Tuple
 import logging
 
 
@@ -41,3 +41,19 @@ def filter_datum(fields: List[str], redaction: str, message: str,
         message = re.sub(rf'({field}=)[^{separator}]*{separator}',
                          rf'\1{redaction}{separator}', message)
     return message
+
+
+PII_FIELDS = ['name', 'email', 'phone', 'ssn', 'password']
+
+
+def get_logger() -> logging.Logger:
+    """
+    create and configure logger
+    """
+    logger = logging.getLogger("user_data")
+    logger.setLevel(logging.INFO)
+    formatter = RedactingFormatter(fields=PII_FIELDS)
+    handler = logging.StreamHandler()
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    return logger
