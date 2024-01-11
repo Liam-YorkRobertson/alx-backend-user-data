@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""replacing occurrences of field values asdlkjaslkdajs  alskdjalkdjalskd
+"""replacing occurrences of field values
 """
 import re
 from typing import List
