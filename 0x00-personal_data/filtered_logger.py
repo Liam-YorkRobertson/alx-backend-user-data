@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""replacing occurrences of field values
+"""replacing occurrences of field values asdlkjaslkdajs  alskdjalkdjalskd
 """
 import re
 from typing import List
@@ -7,7 +7,7 @@ import logging
 
 
 class RedactingFormatter(logging.Formatter):
-    """Redacting Formatter class
+    """Redacting Formatter class asdasdasda asdadadasdasdasdasdad asdasdasdad
     """
 
     REDACTION = "***"
@@ -15,10 +15,16 @@ class RedactingFormatter(logging.Formatter):
     SEPARATOR = ";"
 
     def __init__(self, fields: List[str]):
+        """
+        asdadasdasdasdaasdadsasdadasdasdasdasdadasda asdasd asdasdadadsasdad
+        """
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
+        """
+        asdfasf asdfasfa asdfasfdas asfdsafasdf
+        """
         record.msg = filter_datum(self.fields, self.REDACTION,
                                   record.msg, self.SEPARATOR)
         return super(RedactingFormatter, self).format(record)
