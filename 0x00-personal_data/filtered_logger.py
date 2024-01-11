@@ -81,12 +81,11 @@ def main() -> None:
     each row under a filtered format
     """
     db = get_db()
-
     if db:
         with db.cursor() as cursor:
             cursor.execute("SELECT COUNT(*) FROM users;")
-            print(cursor.fetchone()[0])
-
+            result = cursor.fetchone()[0]
+            print(result)
         db.close()
 
 
