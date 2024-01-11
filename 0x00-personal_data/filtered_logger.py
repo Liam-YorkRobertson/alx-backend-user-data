@@ -86,7 +86,8 @@ def main() -> None:
             cursor = db.cursor(dictionary=True)
             cursor.execute("SELECT * FROM users;")
             for row in cursor.fetchall():
-                user_data = "; ".join(f"{key}={value}" for key, value in row.items())
+                user_data = "; ".join(f"{key}={value}" for key,
+                                      value in row.items())
                 logging.getLogger("user_data").info(user_data)
     except Exception as e:
         print(f"Error: {e}")
