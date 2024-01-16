@@ -26,9 +26,7 @@ def unauthorized(error):
     """
     unauthorised handler
     """
-    response = jsonify({"error": "Unauthorized"})
-    response.status_code = 401
-    return response
+    return jsonify({"error": "Unauthorized"}), 401
 
 
 if __name__ == "__main__":
