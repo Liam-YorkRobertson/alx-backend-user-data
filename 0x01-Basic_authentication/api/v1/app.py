@@ -21,6 +21,13 @@ def not_found(error) -> str:
     return jsonify({"error": "Not found"}), 404
 
 
+@app.errorhandler(401)
+def unauthorized(error):
+    response = jsonify({"error": "Unauthorized"})
+    response.status_code = 401
+    return response
+
+
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
     port = getenv("API_PORT", "5000")
