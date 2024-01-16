@@ -27,4 +27,3 @@ class Auth:
         get current user
         """
         return None
-    
