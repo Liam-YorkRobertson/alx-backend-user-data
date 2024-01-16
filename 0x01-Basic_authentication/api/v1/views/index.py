@@ -26,9 +26,17 @@ def stats() -> str:
     return jsonify(stats)
 
 
-@app_views.route('/unauthorized', methods=['GET'])
+@app_views.route('/unauthorized', strict_slashes=False)
 def unauthorized_endpoint():
     """
     returns authorisation status
     """
     abort(401)
+    
+
+@app_views.route('/forbidden/', strict_slashes=False)
+def forbidden() -> None:
+    """
+    returns forbidden status
+    """
+    abort(403)
