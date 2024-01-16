@@ -2,7 +2,7 @@
 """
 manages API authentication
 """
-from flask import Request
+from flask import request
 from typing import List, TypeVar
 
 
