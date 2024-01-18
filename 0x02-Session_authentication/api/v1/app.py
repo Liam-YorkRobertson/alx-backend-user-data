@@ -62,13 +62,14 @@ def before_request():
                       ]
     if request.path not in excluded_paths and auth.require_auth(
             request.path, excluded_paths):
-        if auth.authorization_header(request) is None:
+        auth_header = auth.authorization_header(request)
+        session_cookie = auth.session_cookie(request)
+        if auth_header is None and session_cookie is None:
             abort(401)
-        if auth.current_user(request) is None:
+        current_user = auth.current_user(request)
+        if current_user is None:
             abort(403)
-        if auth.authorization_header(request) is None and auth.session_cookie(request) is None:
-            abort(401)
-    request.current_user = auth.current_user(request)
+    request.current_user = current_user
 
 
 if __name__ == "__main__":
