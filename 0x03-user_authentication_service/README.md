@@ -1,0 +1,1 @@
+In this directory we are going to be working with API routes, cookies, form data, and HTTP status codes with bcrypt for password security.
