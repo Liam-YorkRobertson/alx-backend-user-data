@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-
+import logging
 from user import Base, User
 
 
@@ -33,11 +33,7 @@ class DB:
         """
         adds a new user
         """
-        try:
-            user = User(email=email, hashed_password=hashed_password)
-            self._session.add(user)
-            self._session.commit()
-            return user
-        except Exception as e:
-            self._session.close()
-            raise e
+        user = User(email=email, hashed_password=hashed_password)
+        self._session.add(user)
+        self._session.commit()
+        return user
