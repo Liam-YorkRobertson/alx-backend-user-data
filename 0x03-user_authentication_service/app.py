@@ -51,7 +51,7 @@ def login():
 @app.route("/sessions", methods=["DELETE"])
 def logout():
     """
-    logout user by destorying session
+    logout user by destroying session
     """
     session_id = request.cookies.get("session_id")
     user = AUTH.get_user_from_session_id(session_id)
@@ -61,6 +61,18 @@ def logout():
         response.delete_cookie("session_id")
         return response
     return jsonify({"message": "Unauthorized"}), 403
+
+
+@app.route("/profile", methods=["GET"])
+def profile():
+    """
+    get user profile
+    """
+    session_id = request.cookies.get("session_id")
+    user = AUTH.get_user_from_session_id(session_id)
+    if user is None:
+        abort(403)
+    return jsonify({"email": user.email})
 
 
 if __name__ == "__main__":
