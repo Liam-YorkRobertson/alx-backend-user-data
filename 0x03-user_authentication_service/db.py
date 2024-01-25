@@ -59,3 +59,16 @@ class DB:
             raise e
         except NoResultFound as e:
             raise e
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        update user details
+        """
+        try:
+            user = self.find_user_by(id=user_id)
+            for key, value in kwargs.items():
+                setattr(user, key, value) if hasattr(User, key) else None
+            self._session.commit()
+        except (NoResultFound, InvalidRequestError):
+            self._session.rollback()
+            raise ValueError
